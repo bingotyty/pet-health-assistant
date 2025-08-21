@@ -1,0 +1,15 @@
+{
+  "functions": {
+    "src/pages/api/analyze-poop.js": {
+      "maxDuration": 30
+    }
+  },
+  "env": {
+    "NEXT_PUBLIC_SUPABASE_URL": "@supabase-url",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "@supabase-anon-key",
+    "SUPABASE_SERVICE_KEY": "@supabase-service-key",
+    "OPENAI_API_KEY": "@openai-api-key",
+    "QWEN_API_ENDPOINT": "@qwen-api-endpoint",
+    "QWEN_API_KEY": "@qwen-api-key"
+  }
+}
