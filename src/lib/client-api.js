@@ -8,9 +8,32 @@ export async function analyzePoopClient(imageFile, userId) {
     console.log('🔍 开始客户端AI分析...');
 
     // 1. 压缩并上传图片到Supabase
-    const fileExt = imageFile.name.split('.').pop();
+    // 安全处理文件扩展名，移动端拍照可能没有name属性
+    let fileExt = 'jpg'; // 默认扩展名
+    if (imageFile.name && typeof imageFile.name === 'string') {
+      const parts = imageFile.name.split('.');
+      if (parts.length > 1) {
+        fileExt = parts.pop() || 'jpg';
+      }
+    }
+    // 根据文件类型确定扩展名
+    if (imageFile.type) {
+      if (imageFile.type.includes('jpeg')) fileExt = 'jpg';
+      else if (imageFile.type.includes('png')) fileExt = 'png';
+      else if (imageFile.type.includes('webp')) fileExt = 'webp';
+    }
+    
     const fileName = `${Date.now()}.${fileExt}`;
     const filePath = `poop-images/${fileName}`;
+    
+    console.log('📁 文件信息:', {
+      originalName: imageFile.name || 'camera-capture',
+      fileType: imageFile.type || 'unknown',
+      fileSize: imageFile.size || 0,
+      extractedExt: fileExt,
+      fileName: fileName,
+      hasName: !!imageFile.name
+    });
 
     const { data: uploadData, error: uploadError } = await supabase.storage
       .from('pet-images')
