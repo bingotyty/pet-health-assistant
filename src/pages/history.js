@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import { supabase } from '../lib/supabase';
 import Auth from '../components/Auth';
 import { analyzeTrend } from '../lib/utils';
 import { getRecordsClient, getTrendsClient } from '../lib/client-api';
@@ -27,9 +28,29 @@ export default function HistoryPage() {
     if (!user || !user.id) return;
     
     try {
-      // 使用客户端API获取记录
-      const records = await getRecordsClient(user.id);
-      setRecords(records);
+      // 根据环境选择API调用方式
+      const isStatic = process.env.DEPLOY_TARGET === 'cloudflare' || process.env.NODE_ENV === 'production';
+      
+      if (isStatic) {
+        // 生产环境使用客户端API
+        const records = await getRecordsClient(user.id);
+        setRecords(records);
+      } else {
+        // 开发环境使用API路由
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) return;
+        
+        const response = await fetch('/api/records', {
+          headers: {
+            'Authorization': `Bearer ${session.access_token}`
+          }
+        });
+        
+        if (response.ok) {
+          const result = await response.json();
+          setRecords(result.data || []);
+        }
+      }
     } catch (error) {
       console.error('Error fetching records:', error);
       setError('获取记录失败');
@@ -42,10 +63,31 @@ export default function HistoryPage() {
     if (!user || !user.id) return;
     
     try {
-      // 使用客户端API获取趋势数据
-      const trendRecords = await getTrendsClient(user.id, 7);
-      const trend = analyzeTrend(trendRecords);
-      setTrendData(trend);
+      // 根据环境选择API调用方式
+      const isStatic = process.env.DEPLOY_TARGET === 'cloudflare' || process.env.NODE_ENV === 'production';
+      
+      if (isStatic) {
+        // 生产环境使用客户端API
+        const trendRecords = await getTrendsClient(user.id, 7);
+        const trend = analyzeTrend(trendRecords);
+        setTrendData(trend);
+      } else {
+        // 开发环境使用API路由
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) return;
+        
+        const response = await fetch('/api/trends', {
+          headers: {
+            'Authorization': `Bearer ${session.access_token}`
+          }
+        });
+        
+        if (response.ok) {
+          const result = await response.json();
+          const trend = analyzeTrend(result.data);
+          setTrendData(trend);
+        }
+      }
     } catch (error) {
       console.error('Error generating trend:', error);
     }

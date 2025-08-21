@@ -3,19 +3,23 @@ const nextConfig = {
   reactStrictMode: true,
   images: {
     domains: ['localhost'],
-    unoptimized: true, // Required for static export
+    // 根据环境动态设置
+    unoptimized: process.env.NODE_ENV === 'production',
   },
   experimental: {
     esmExternals: true,
   },
-  // Enable static export for Cloudflare Pages
-  output: 'export',
-  trailingSlash: true,
-  skipTrailingSlashRedirect: true,
-  // Disable server-side features for static export
+  // 仅在生产环境启用静态导出
+  ...(process.env.DEPLOY_TARGET === 'cloudflare' && {
+    output: 'export',
+    trailingSlash: true,
+    skipTrailingSlashRedirect: true,
+  }),
   typescript: {
     ignoreBuildErrors: false,
   },
+  // 修复workspace根目录警告
+  outputFileTracingRoot: undefined,
 }
 
 export default nextConfig

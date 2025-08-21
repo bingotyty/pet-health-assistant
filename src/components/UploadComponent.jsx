@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { compressImage } from '../lib/utils';
 import { useAuth } from '../contexts/AuthContext';
 import { analyzePoopClient } from '../lib/client-api';
+import { supabase } from '../lib/supabase';
 
 export default function UploadComponent({ onAnalysisComplete, onLoading }) {
   const [dragOver, setDragOver] = useState(false);
@@ -63,9 +64,39 @@ export default function UploadComponent({ onAnalysisComplete, onLoading }) {
         throw new Error('用户未登录');
       }
       
-      // 使用客户端API进行分析
-      const result = await analyzePoopClient(compressedFile, user.id);
-      onAnalysisComplete(result);
+      // 根据环境选择不同的API调用方式
+      const isStatic = process.env.DEPLOY_TARGET === 'cloudflare' || process.env.NODE_ENV === 'production';
+      
+      if (isStatic) {
+        // 生产环境使用客户端API
+        const result = await analyzePoopClient(compressedFile, user.id);
+        onAnalysisComplete(result);
+      } else {
+        // 开发环境使用API路由
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) {
+          throw new Error('用户未登录');
+        }
+        
+        const formData = new FormData();
+        formData.append('image', compressedFile);
+        
+        const response = await fetch('/api/analyze-poop', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${session.access_token}`
+          },
+          body: formData
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || '分析失败');
+        }
+
+        const result = await response.json();
+        onAnalysisComplete(result.data);
+      }
       
     } catch (error) {
       console.error('Analysis failed:', error);
