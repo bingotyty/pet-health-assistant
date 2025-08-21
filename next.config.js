@@ -5,8 +5,8 @@ const nextConfig = {
     domains: ['localhost'],
   },
   experimental: {
-    esmExternals: false,
+    esmExternals: true,
   }
 }
 
-module.exports = nextConfig
+export default nextConfig

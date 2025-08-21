@@ -1,6 +1,7 @@
-import { supabase } from '../../lib/supabase';
-import { analyzePoopWithQwen, generateHealthReport, determineRiskLevel } from '../../lib/ai-service';
+import { createClient } from '@supabase/supabase-js';
+import { analyzePoopWithQwen, generateHealthReport, determineRiskLevel } from '../../lib/ai-service.js';
 import { IncomingForm } from 'formidable';
+import { readFileSync } from 'fs';
 
 export const config = {
   api: {
@@ -14,6 +15,33 @@ export default async function handler(req, res) {
   }
 
   try {
+    // 验证用户认证并创建带会话的Supabase客户端
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+      return res.status(401).json({ error: 'Missing authorization header' });
+    }
+
+    const token = authHeader.replace('Bearer ', '');
+    
+    // 创建带有用户会话的Supabase客户端
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+      {
+        global: {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      }
+    );
+
+    // 验证token并获取用户信息
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+
+    if (authError || !user) {
+      return res.status(401).json({ error: 'Invalid or expired token' });
+    }
     const form = new IncomingForm();
     const [fields, files] = await form.parse(req);
     
@@ -22,7 +50,13 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'No image file provided' });
     }
 
-    const qwenResult = await analyzePoopWithQwen(imageFile);
+    // 读取文件内容转换为File对象
+    const fileBuffer = readFileSync(imageFile.filepath);
+    const file = new File([fileBuffer], imageFile.originalFilename || 'image.jpg', {
+      type: imageFile.mimetype
+    });
+
+    const qwenResult = await analyzePoopWithQwen(file);
     const riskLevel = determineRiskLevel(qwenResult);
     const gptReport = await generateHealthReport(qwenResult, fields.description?.[0] || '', {});
 
@@ -32,13 +66,17 @@ export default async function handler(req, res) {
 
     const { data: uploadData, error: uploadError } = await supabase.storage
       .from('pet-images')
-      .upload(filePath, imageFile);
+      .upload(filePath, fileBuffer, {
+        contentType: imageFile.mimetype,
+        upsert: false
+      });
 
     if (uploadError) {
       console.error('Upload error:', uploadError);
       throw new Error('Failed to upload image');
     }
 
+    // 使用带认证会话的客户端插入记录，RLS策略会自动生效
     const { data, error } = await supabase
       .from('feces_records')
       .insert({
@@ -46,7 +84,8 @@ export default async function handler(req, res) {
         qwen_analysis: qwenResult,
         gpt_report: gptReport,
         risk_level: riskLevel,
-        user_description: fields.description?.[0] || null
+        user_description: fields.description?.[0] || null,
+        user_id: user.id
       })
       .select()
       .single();

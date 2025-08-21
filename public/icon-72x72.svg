@@ -1,0 +1,51 @@
+<svg width="72" height="72" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background with gradient -->
+  <defs>
+    <radialGradient id="bgGradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#fdf2f8;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#fce7f3;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f9a8d4;stop-opacity:1" />
+    </radialGradient>
+    <linearGradient id="pawGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ec4899;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#d946ef;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#be185d;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#be185d" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="256" cy="256" r="240" fill="url(#bgGradient)" stroke="#f9a8d4" stroke-width="8"/>
+  
+  <!-- Main paw pad (heart-like shape) -->
+  <g filter="url(#shadow)">
+    <path d="M256 320 C220 280, 160 260, 160 220 C160 190, 180 170, 210 170 C230 170, 245 180, 256 195 C267 180, 282 170, 302 170 C332 170, 352 190, 352 220 C352 260, 292 280, 256 320 Z" fill="url(#pawGradient)"/>
+  </g>
+  
+  <!-- Top toe pads -->
+  <g filter="url(#shadow)">
+    <!-- Left toe -->
+    <ellipse cx="200" cy="180" rx="20" ry="35" fill="url(#pawGradient)" transform="rotate(-25 200 180)"/>
+    <!-- Center-left toe -->
+    <ellipse cx="230" cy="150" rx="18" ry="32" fill="url(#pawGradient)" transform="rotate(-10 230 150)"/>
+    <!-- Center-right toe -->
+    <ellipse cx="282" cy="150" rx="18" ry="32" fill="url(#pawGradient)" transform="rotate(10 282 150)"/>
+    <!-- Right toe -->
+    <ellipse cx="312" cy="180" rx="20" ry="35" fill="url(#pawGradient)" transform="rotate(25 312 180)"/>
+  </g>
+  
+  <!-- Cute sparkles -->
+  <g fill="#fbbf24" opacity="0.8">
+    <circle cx="380" cy="150" r="4"/>
+    <circle cx="400" cy="200" r="3"/>
+    <circle cx="360" cy="350" r="5"/>
+    <circle cx="120" cy="180" r="3"/>
+    <circle cx="140" cy="350" r="4"/>
+    <circle cx="100" cy="250" r="2"/>
+  </g>
+  
+  <!-- Heart accent -->
+  <path d="M420 80 C415 70, 405 65, 395 65 C385 65, 380 70, 380 75 C380 70, 375 65, 365 65 C355 65, 345 70, 350 80 C350 90, 380 110, 380 110 C380 110, 410 90, 420 80 Z" fill="#f472b6" opacity="0.7"/>
+</svg>
