@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { supabase } from '../lib/supabase';
 import Auth from '../components/Auth';
 import { analyzeTrend } from '../lib/utils';
+import { getRecordsClient, getTrendsClient } from '../lib/client-api';
 import ResultCard from '../components/ResultCard';
 import UserProfile from '../components/UserProfile';
 import OfflineIndicator from '../components/OfflineIndicator';
@@ -24,23 +24,12 @@ export default function HistoryPage() {
   }, [user]);
   
   const fetchHistoryRecords = async () => {
-    if (!user) return;
+    if (!user || !user.id) return;
     
     try {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) return;
-      
-      // 使用API端点获取记录
-      const response = await fetch('/api/records', {
-        headers: {
-          'Authorization': `Bearer ${session.access_token}`
-        }
-      });
-      if (!response.ok) {
-        throw new Error('获取记录失败');
-      }
-      const result = await response.json();
-      setRecords(result.data || []);
+      // 使用客户端API获取记录
+      const records = await getRecordsClient(user.id);
+      setRecords(records);
     } catch (error) {
       console.error('Error fetching records:', error);
       setError('获取记录失败');
@@ -50,23 +39,13 @@ export default function HistoryPage() {
   };
   
   const generateTrendAnalysis = async () => {
-    if (!user) return;
+    if (!user || !user.id) return;
     
     try {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) return;
-      
-      // 使用API端点获取趋势数据
-      const response = await fetch('/api/trends', {
-        headers: {
-          'Authorization': `Bearer ${session.access_token}`
-        }
-      });
-      if (response.ok) {
-        const result = await response.json();
-        const trend = analyzeTrend(result.data);
-        setTrendData(trend);
-      }
+      // 使用客户端API获取趋势数据
+      const trendRecords = await getTrendsClient(user.id, 7);
+      const trend = analyzeTrend(trendRecords);
+      setTrendData(trend);
     } catch (error) {
       console.error('Error generating trend:', error);
     }

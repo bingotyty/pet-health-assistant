@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { compressImage } from '../lib/utils';
 import { useAuth } from '../contexts/AuthContext';
-import { supabase } from '../lib/supabase';
+import { analyzePoopClient } from '../lib/client-api';
 
 export default function UploadComponent({ onAnalysisComplete, onLoading }) {
   const [dragOver, setDragOver] = useState(false);
@@ -58,31 +58,14 @@ export default function UploadComponent({ onAnalysisComplete, onLoading }) {
     try {
       const compressedFile = await compressImage(file);
       
-      // 获取用户会话token
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
+      // 检查用户登录状态
+      if (!user || !user.id) {
         throw new Error('用户未登录');
       }
       
-      // 使用API端点进行分析
-      const formData = new FormData();
-      formData.append('image', compressedFile);
-      
-      const response = await fetch('/api/analyze-poop', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${session.access_token}`
-        },
-        body: formData
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || '分析失败');
-      }
-
-      const result = await response.json();
-      onAnalysisComplete(result.data);
+      // 使用客户端API进行分析
+      const result = await analyzePoopClient(compressedFile, user.id);
+      onAnalysisComplete(result);
       
     } catch (error) {
       console.error('Analysis failed:', error);
