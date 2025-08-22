@@ -1,11 +1,32 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key';
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-// 只在浏览器端检查真实的环境变量
-if (typeof window !== 'undefined' && (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)) {
-  console.warn('Missing Supabase environment variables - authentication features will not work');
+// 创建一个条件导出，只在有环境变量时创建真实客户端
+export const supabase = (supabaseUrl && supabaseAnonKey) 
+  ? createClient(supabaseUrl, supabaseAnonKey)
+  : {
+      // 提供一个mock对象，避免构建时出错
+      auth: {
+        getSession: () => Promise.resolve({ data: { session: null }, error: null }),
+        signInWithPassword: () => Promise.resolve({ data: null, error: new Error('Supabase not configured') }),
+        signUp: () => Promise.resolve({ data: null, error: new Error('Supabase not configured') }),
+        signOut: () => Promise.resolve({ error: null })
+      },
+      from: () => ({
+        select: () => Promise.resolve({ data: [], error: null }),
+        insert: () => Promise.resolve({ data: null, error: new Error('Supabase not configured') }),
+        update: () => Promise.resolve({ data: null, error: new Error('Supabase not configured') })
+      }),
+      storage: {
+        from: () => ({
+          upload: () => Promise.resolve({ data: null, error: new Error('Supabase not configured') })
+        })
+      }
+    };
+
+// 运行时检查环境变量
+if (typeof window !== 'undefined' && (!supabaseUrl || !supabaseAnonKey)) {
+  console.warn('Supabase environment variables missing - authentication features disabled');
 }
-
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
