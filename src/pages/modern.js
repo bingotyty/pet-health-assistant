@@ -38,7 +38,7 @@ export default function ModernHome() {
               <div className="text-2xl animate-pulse">🐾</div>
             </div>
           </div>
-          <p className="text-pink-600 font-medium">🌸 加载中...</p>
+          <p className="text-pink-600 font-medium">🌸 {t('common.loading')}</p>
         </div>
       </div>
     );

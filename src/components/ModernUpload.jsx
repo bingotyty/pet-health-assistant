@@ -67,14 +67,14 @@ export default function ModernUpload({ onAnalysisComplete, onLoading }) {
       const compressedFile = await compressImage(file);
       
       if (!user || !user.id) {
-        throw new Error('请先登录');
+        throw new Error(t('errors.login_required'));
       }
       
       setUploadProgress(95);
       
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) {
-        throw new Error('请先登录');
+        throw new Error(t('errors.login_required'));
       }
       
       const formData = new FormData();
@@ -94,14 +94,14 @@ export default function ModernUpload({ onAnalysisComplete, onLoading }) {
           const responseText = await response.text();
           errorData = responseText ? JSON.parse(responseText) : {};
         } catch (e) {
-          errorData = { message: `服务器错误 (${response.status})` };
+          errorData = { message: t('errors.server_error') };
         }
-        throw new Error(errorData.message || `分析失败 (${response.status})`);
+        throw new Error(errorData.message || t('errors.analysis_failed'));
       }
 
       const responseText = await response.text();
       if (!responseText) {
-        throw new Error('服务器返回空响应，请稍后再试');
+        throw new Error(t('errors.empty_response'));
       }
       
       let result;
@@ -109,14 +109,14 @@ export default function ModernUpload({ onAnalysisComplete, onLoading }) {
         result = JSON.parse(responseText);
       } catch (e) {
         console.error('JSON解析错误:', responseText);
-        throw new Error('服务器响应格式错误，请稍后再试');
+        throw new Error(t('errors.json_parse_error'));
       }
       setUploadProgress(100);
       onAnalysisComplete(result.data);
       
     } catch (error) {
       console.error('Analysis failed:', error);
-      alert(error.message || '分析失败，请重试');
+      alert(error.message || t('errors.analysis_failed'));
       setUploadProgress(0);
     } finally {
       onLoading(false);
@@ -302,8 +302,8 @@ export default function ModernUpload({ onAnalysisComplete, onLoading }) {
           <div className="flex items-center space-x-3">
             <div className="text-3xl animate-bounce">🍎</div>
             <div className="flex-1">
-              <h4 className="font-bold text-blue-800 mb-1">iOS 优化提示</h4>
-              <p className="text-blue-700 text-sm">建议使用"拍照上传"功能，可直接调用相机获得最佳图片质量</p>
+              <h4 className="font-bold text-blue-800 mb-1">{t('install.features.ios_tips')}</h4>
+              <p className="text-blue-700 text-sm">{t('install.features.camera_quality')}</p>
             </div>
             <div className="text-2xl animate-pulse">📸</div>
           </div>

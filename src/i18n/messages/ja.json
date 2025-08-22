@@ -135,6 +135,29 @@
       "history": "履歴"
     }
   },
+  "install": {
+    "title": "ホーム画面に追加",
+    "description": "ペット健康アシスタントをホーム画面に追加して、いつでもどこでも毛玉ちゃんの健康を守りましょう~ ✨",
+    "install_now": "今すぐインストール",
+    "remind_later": "後で通知",
+    "ios_guide": {
+      "title": "ホーム画面に追加",
+      "step1": "共有ボタンをタップ",
+      "step2": "「ホーム画面に追加」を選択",
+      "step3": "「追加」をタップしてインストール完了",
+      "got_it": "わかりました 💝"
+    },
+    "features": {
+      "instant_analysis": "瞬時分析",
+      "ai_recognition": "AIスマート認識",
+      "privacy_protection": "プライバシー保護",
+      "data_security": "データセキュリティ暗号化",
+      "available_247": "24時間利用可能",
+      "anytime_anywhere": "いつでもどこでも使用",
+      "ios_tips": "iOS最適化のヒント",
+      "camera_quality": "最高の画像品質のために「写真撮影」機能の使用をお勧めします"
+    }
+  },
   "errors": {
     "analysis_failed": "分析に失敗しました、再試行してください",
     "upload_failed": "アップロードに失敗しました",

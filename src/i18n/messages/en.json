@@ -126,6 +126,29 @@
       "history": "History"
     }
   },
+  "install": {
+    "title": "Install to Home Screen",
+    "description": "Install Pet Health Assistant to your home screen for easy access anytime~ ✨",
+    "install_now": "Install Now",
+    "remind_later": "Remind Later",
+    "ios_guide": {
+      "title": "Install to Home Screen",
+      "step1": "Tap the Share button",
+      "step2": "Select 'Add to Home Screen'",
+      "step3": "Tap 'Add' to complete installation",
+      "got_it": "Got it 💝"
+    },
+    "features": {
+      "instant_analysis": "Instant Analysis",
+      "ai_recognition": "AI Smart Recognition",
+      "privacy_protection": "Privacy Protection",
+      "data_security": "Data Security Encryption",
+      "available_247": "24/7 Available",
+      "anytime_anywhere": "Use Anytime Anywhere",
+      "ios_tips": "iOS Optimization Tips",
+      "camera_quality": "Recommend using 'Take Photo' feature for best image quality by directly accessing camera"
+    }
+  },
   "common": {
     "loading": "Loading...",
     "retry": "Retry",

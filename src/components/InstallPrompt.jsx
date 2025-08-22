@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
+import { useTranslations } from '../lib/i18n';
 
 export default function InstallPrompt() {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [showInstallPrompt, setShowInstallPrompt] = useState(false);
   const [isInstalled, setIsInstalled] = useState(false);
+  const t = useTranslations();
 
   useEffect(() => {
     // 检查是否已经安装
@@ -51,9 +53,9 @@ export default function InstallPrompt() {
     const { outcome } = await deferredPrompt.userChoice;
 
     if (outcome === 'accepted') {
-      console.log('用户接受了安装');
+      console.log('User accepted installation');
     } else {
-      console.log('用户拒绝了安装');
+      console.log('User declined installation');
     }
 
     setDeferredPrompt(null);
@@ -86,10 +88,10 @@ export default function InstallPrompt() {
           <div className="text-3xl animate-bounce">📱</div>
           <div className="flex-1">
             <h3 className="font-bold text-rose-600 mb-1">
-              💝 安装到主屏幕
+              💝 {t('install.title')}
             </h3>
             <p className="text-pink-600 text-sm leading-relaxed mb-3">
-              安装宠物健康小助手到主屏幕，随时随地守护毛孩子的健康~ ✨
+              {t('install.description')}
             </p>
             <div className="flex space-x-2">
               <button
@@ -97,13 +99,13 @@ export default function InstallPrompt() {
                 className="btn-pink px-4 py-2 text-sm font-bold flex-1"
               >
                 <span className="mr-1">⬇️</span>
-                立即安装
+                {t('install.install_now')}
               </button>
               <button
                 onClick={handleDismiss}
                 className="px-4 py-2 text-sm text-pink-500 hover:text-pink-600 bg-white/70 rounded-xl border border-pink-200 transition-colors duration-200"
               >
-                稍后提醒
+                {t('install.remind_later')}
               </button>
             </div>
           </div>
@@ -122,6 +124,7 @@ export default function InstallPrompt() {
 // iOS Safari安装指引组件
 export function IOSInstallGuide() {
   const [showGuide, setShowGuide] = useState(false);
+  const t = useTranslations();
   
   useEffect(() => {
     // 检测是否是iOS Safari且未安装
@@ -142,27 +145,27 @@ export function IOSInstallGuide() {
       <div className="bg-white rounded-3xl p-6 max-w-sm mx-auto text-center sparkle">
         <div className="text-6xl mb-4">📱</div>
         <h3 className="text-xl font-bold text-rose-600 mb-3">
-          安装到主屏幕
+          {t('install.ios_guide.title')}
         </h3>
         <div className="space-y-3 text-sm text-pink-600">
           <div className="flex items-center space-x-2">
             <span className="text-blue-500 text-lg">📤</span>
-            <span>点击分享按钮</span>
+            <span>{t('install.ios_guide.step1')}</span>
           </div>
           <div className="flex items-center space-x-2">
             <span className="text-lg">⬇️</span>
-            <span>选择"添加到主屏幕"</span>
+            <span>{t('install.ios_guide.step2')}</span>
           </div>
           <div className="flex items-center space-x-2">
             <span className="text-lg">✅</span>
-            <span>点击"添加"完成安装</span>
+            <span>{t('install.ios_guide.step3')}</span>
           </div>
         </div>
         <button
           onClick={() => setShowGuide(false)}
           className="btn-pink w-full mt-6 py-3 text-base font-bold"
         >
-          我知道了 💝
+          {t('install.ios_guide.got_it')}
         </button>
       </div>
     </div>
