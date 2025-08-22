@@ -1,3 +1,5 @@
+export const runtime = 'edge';
+
 export default function handler(req, res) {
   console.log('API test called:', req.method, req.url);
   

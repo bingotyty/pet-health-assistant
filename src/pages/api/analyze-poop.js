@@ -1,13 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 import { analyzePoopWithQwen, generateHealthReport, determineRiskLevel } from '../../lib/ai-service';
-import { IncomingForm } from 'formidable';
-import { readFileSync } from 'fs';
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
+export const runtime = 'edge';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -42,25 +36,20 @@ export default async function handler(req, res) {
     if (authError || !user) {
       return res.status(401).json({ error: 'Invalid or expired token' });
     }
-    const form = new IncomingForm();
-    const [fields, files] = await form.parse(req);
+    // 处理 multipart/form-data (Edge Runtime 兼容)
+    const formData = await req.formData();
+    const imageFile = formData.get('image');
     
-    const imageFile = files.image?.[0];
-    if (!imageFile) {
+    if (!imageFile || !(imageFile instanceof File)) {
       return res.status(400).json({ error: 'No image file provided' });
     }
 
-    // 读取文件内容转换为File对象
-    const fileBuffer = readFileSync(imageFile.filepath);
-    const file = new File([fileBuffer], imageFile.originalFilename || 'image.jpg', {
-      type: imageFile.mimetype
-    });
-
-    const qwenResult = await analyzePoopWithQwen(file);
+    const qwenResult = await analyzePoopWithQwen(imageFile);
     const riskLevel = determineRiskLevel(qwenResult);
-    const gptReport = await generateHealthReport(qwenResult, fields.description?.[0] || '', {});
+    const description = formData.get('description') || '';
+    const gptReport = await generateHealthReport(qwenResult, description, {});
 
-    const fileExt = imageFile.originalFilename?.split('.').pop() || 'jpg';
+    const fileExt = imageFile.name?.split('.').pop() || 'jpg';
     const fileName = `${Date.now()}.${fileExt}`;
     const filePath = `poop-images/${fileName}`;
 

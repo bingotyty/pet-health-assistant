@@ -1,7 +1,10 @@
 # Cloudflare Pages配置
 name = "pet-health-assistant"
-compatibility_date = "2024-08-01"
+compatibility_date = "2024-09-23"
 pages_build_output_dir = ".vercel/output/static"
+
+# 启用 Node.js 兼容性
+compatibility_flags = ["nodejs_compat"]
 
 [env.production]
 # 生产环境变量在Cloudflare Dashboard设置
