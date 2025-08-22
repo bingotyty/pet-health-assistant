@@ -1,0 +1,7 @@
+# Cloudflare Pages配置
+name = "pet-health-assistant"
+compatibility_date = "2024-08-01"
+pages_build_output_dir = ".vercel/output/static"
+
+[env.production]
+# 生产环境变量在Cloudflare Dashboard设置

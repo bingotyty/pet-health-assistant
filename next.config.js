@@ -9,12 +9,8 @@ const nextConfig = {
   experimental: {
     esmExternals: true,
   },
-  // 仅在生产环境启用静态导出
-  ...(process.env.DEPLOY_TARGET === 'cloudflare' && {
-    output: 'export',
-    trailingSlash: true,
-    skipTrailingSlashRedirect: true,
-  }),
+  // Cloudflare Pages全栈应用配置 - 支持API路由
+  // 使用标准构建模式，然后通过@cloudflare/next-on-pages适配器部署
   typescript: {
     ignoreBuildErrors: false,
   },
