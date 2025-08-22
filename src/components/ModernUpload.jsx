@@ -89,11 +89,28 @@ export default function ModernUpload({ onAnalysisComplete, onLoading }) {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || '分析失败');
+        let errorData;
+        try {
+          const responseText = await response.text();
+          errorData = responseText ? JSON.parse(responseText) : {};
+        } catch (e) {
+          errorData = { message: `服务器错误 (${response.status})` };
+        }
+        throw new Error(errorData.message || `分析失败 (${response.status})`);
       }
 
-      const result = await response.json();
+      const responseText = await response.text();
+      if (!responseText) {
+        throw new Error('服务器返回空响应，请稍后再试');
+      }
+      
+      let result;
+      try {
+        result = JSON.parse(responseText);
+      } catch (e) {
+        console.error('JSON解析错误:', responseText);
+        throw new Error('服务器响应格式错误，请稍后再试');
+      }
       setUploadProgress(100);
       onAnalysisComplete(result.data);
       

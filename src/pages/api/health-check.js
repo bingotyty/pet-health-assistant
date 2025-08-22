@@ -1,0 +1,33 @@
+export default function handler(req, res) {
+  if (req.method !== 'GET') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  const requiredVars = {
+    'NEXT_PUBLIC_SUPABASE_URL': !!process.env.NEXT_PUBLIC_SUPABASE_URL,
+    'NEXT_PUBLIC_SUPABASE_ANON_KEY': !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    'SUPABASE_SERVICE_KEY': !!process.env.SUPABASE_SERVICE_KEY,
+    'OPENAI_API_KEY': !!process.env.OPENAI_API_KEY,
+    'QWEN_API_ENDPOINT': !!process.env.QWEN_API_ENDPOINT,
+    'QWEN_API_KEY': !!process.env.QWEN_API_KEY
+  };
+
+  const missingVars = Object.entries(requiredVars)
+    .filter(([key, exists]) => !exists)
+    .map(([key]) => key);
+
+  const isHealthy = missingVars.length === 0;
+
+  res.status(isHealthy ? 200 : 503).json({
+    status: isHealthy ? 'healthy' : 'unhealthy',
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV,
+    configStatus: {
+      ...requiredVars,
+      missingVariables: missingVars
+    },
+    message: isHealthy 
+      ? '所有配置正常' 
+      : `缺少以下环境变量: ${missingVars.join(', ')}`
+  });
+}

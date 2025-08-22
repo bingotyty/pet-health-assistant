@@ -167,19 +167,36 @@ async function tryQwenAPI(imageFile, qwenEndpoint, qwenApiKey) {
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('Qwen API error response:', errorText);
+      console.error('Qwen API error response:', {
+        status: response.status,
+        statusText: response.statusText,
+        headers: Object.fromEntries(response.headers.entries()),
+        body: errorText
+      });
       throw new Error(`Qwen API error: ${response.status} ${response.statusText} - ${errorText}`);
     }
 
     const responseText = await response.text();
-    console.log('Qwen API raw response:', responseText);
+    console.log('Qwen API raw response:', {
+      length: responseText.length,
+      preview: responseText.substring(0, 200),
+      full: responseText
+    });
+    
+    if (!responseText || responseText.trim() === '') {
+      throw new Error('Qwen API returned empty response');
+    }
     
     let result;
     try {
       result = JSON.parse(responseText);
     } catch (parseError) {
-      console.error('Failed to parse JSON response:', responseText);
-      throw new Error(`Invalid JSON response from Qwen API: ${parseError.message}`);
+      console.error('Failed to parse JSON response:', {
+        parseError: parseError.message,
+        responseText,
+        responseLength: responseText.length
+      });
+      throw new Error(`Invalid JSON response from Qwen API: ${parseError.message}. Response: ${responseText.substring(0, 100)}...`);
     }
     console.log('Qwen API response:', result);
     

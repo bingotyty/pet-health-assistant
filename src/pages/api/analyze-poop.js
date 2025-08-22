@@ -108,9 +108,18 @@ export default async function handler(req, res) {
 
   } catch (error) {
     console.error('Analysis failed:', error);
-    res.status(500).json({ 
-      error: 'Analysis failed',
-      message: error.message 
-    });
+    
+    // 检查是否是配置问题
+    if (error.message.includes('missing') || error.message.includes('configuration')) {
+      res.status(503).json({ 
+        error: 'Service temporarily unavailable',
+        message: '服务暂时不可用，请联系管理员检查配置' 
+      });
+    } else {
+      res.status(500).json({ 
+        error: 'Analysis failed',
+        message: error.message || '分析过程中发生错误，请稍后再试'
+      });
+    }
   }
 }
