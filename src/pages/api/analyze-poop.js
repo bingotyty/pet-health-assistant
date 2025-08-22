@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-import { analyzePoopWithQwen, generateHealthReport, determineRiskLevel } from '../../lib/ai-service.js';
+import { analyzePoopWithQwen, generateHealthReport, determineRiskLevel } from '../../lib/ai-service';
 import { IncomingForm } from 'formidable';
 import { readFileSync } from 'fs';
 

@@ -1,11 +1,10 @@
 // 宠物健康小助手 Service Worker
-const CACHE_NAME = 'pet-health-v1';
+const CACHE_NAME = 'pet-health-v2';
 const urlsToCache = [
   '/',
   '/history',
-  '/manifest.json',
-  '/static/js/',
-  '/static/css/',
+  '/modern',
+  '/manifest.json'
 ];
 
 // 安装 Service Worker
@@ -37,6 +36,11 @@ self.addEventListener('activate', (event) => {
 
 // 拦截网络请求
 self.addEventListener('fetch', (event) => {
+  // 不缓存API请求
+  if (event.request.url.includes('/api/')) {
+    return; // 让API请求直接通过
+  }
+  
   event.respondWith(
     caches.match(event.request)
       .then((response) => {
@@ -57,8 +61,8 @@ self.addEventListener('fetch', (event) => {
 
             caches.open(CACHE_NAME)
               .then((cache) => {
-                // 只缓存GET请求
-                if (event.request.method === 'GET') {
+                // 只缓存GET请求，不缓存API
+                if (event.request.method === 'GET' && !event.request.url.includes('/api/')) {
                   cache.put(event.request, responseToCache);
                 }
               });
