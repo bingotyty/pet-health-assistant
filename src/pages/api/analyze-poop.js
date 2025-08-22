@@ -3,16 +3,22 @@ import { analyzePoopWithQwen, generateHealthReport, determineRiskLevel } from '.
 
 export const runtime = 'edge';
 
-export default async function handler(req, res) {
+export default async function handler(req) {
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+    return new Response(JSON.stringify({ error: 'Method not allowed' }), {
+      status: 405,
+      headers: { 'Content-Type': 'application/json' }
+    });
   }
 
   try {
     // 验证用户认证并创建带会话的Supabase客户端
-    const authHeader = req.headers.authorization;
+    const authHeader = req.headers.get('authorization');
     if (!authHeader) {
-      return res.status(401).json({ error: 'Missing authorization header' });
+      return new Response(JSON.stringify({ error: 'Missing authorization header' }), {
+        status: 401,
+        headers: { 'Content-Type': 'application/json' }
+      });
     }
 
     const token = authHeader.replace('Bearer ', '');
@@ -34,14 +40,20 @@ export default async function handler(req, res) {
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
     if (authError || !user) {
-      return res.status(401).json({ error: 'Invalid or expired token' });
+      return new Response(JSON.stringify({ error: 'Invalid or expired token' }), {
+        status: 401,
+        headers: { 'Content-Type': 'application/json' }
+      });
     }
     // 处理 multipart/form-data (Edge Runtime 兼容)
     const formData = await req.formData();
     const imageFile = formData.get('image');
     
     if (!imageFile || !(imageFile instanceof File)) {
-      return res.status(400).json({ error: 'No image file provided' });
+      return new Response(JSON.stringify({ error: 'No image file provided' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' }
+      });
     }
 
     const qwenResult = await analyzePoopWithQwen(imageFile);
@@ -55,8 +67,8 @@ export default async function handler(req, res) {
 
     const { data: uploadData, error: uploadError } = await supabase.storage
       .from('pet-images')
-      .upload(filePath, fileBuffer, {
-        contentType: imageFile.mimetype,
+      .upload(filePath, imageFile, {
+        contentType: imageFile.type,
         upsert: false
       });
 
@@ -73,7 +85,7 @@ export default async function handler(req, res) {
         qwen_analysis: qwenResult,
         gpt_report: gptReport,
         risk_level: riskLevel,
-        user_description: fields.description?.[0] || null,
+        user_description: description || null,
         user_id: user.id
       })
       .select()
@@ -84,7 +96,7 @@ export default async function handler(req, res) {
       throw new Error('Failed to save record');
     }
 
-    res.status(200).json({
+    return new Response(JSON.stringify({
       success: true,
       data: {
         id: data.id,
@@ -93,6 +105,9 @@ export default async function handler(req, res) {
         risk_level: data.risk_level,
         created_at: data.created_at
       }
+    }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
     });
 
   } catch (error) {
@@ -100,14 +115,20 @@ export default async function handler(req, res) {
     
     // 检查是否是配置问题
     if (error.message.includes('missing') || error.message.includes('configuration')) {
-      res.status(503).json({ 
+      return new Response(JSON.stringify({ 
         error: 'Service temporarily unavailable',
         message: '服务暂时不可用，请联系管理员检查配置' 
+      }), {
+        status: 503,
+        headers: { 'Content-Type': 'application/json' }
       });
     } else {
-      res.status(500).json({ 
+      return new Response(JSON.stringify({ 
         error: 'Analysis failed',
         message: error.message || '分析过程中发生错误，请稍后再试'
+      }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' }
       });
     }
   }

@@ -2,9 +2,12 @@ import { createClient } from '@supabase/supabase-js';
 
 export const runtime = 'edge';
 
-export default async function handler(req, res) {
+export default async function handler(req) {
   if (req.method !== 'GET') {
-    return res.status(405).json({ error: 'Method not allowed' });
+    return new Response(JSON.stringify({ error: 'Method not allowed' }), {
+      status: 405,
+      headers: { 'Content-Type': 'application/json' }
+    });
   }
 
   try {
@@ -14,19 +17,26 @@ export default async function handler(req, res) {
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
     );
 
-    const authHeader = req.headers.authorization;
+    const authHeader = req.headers.get('authorization');
     if (!authHeader) {
-      return res.status(401).json({ error: 'Missing authorization header' });
+      return new Response(JSON.stringify({ error: 'Missing authorization header' }), {
+        status: 401,
+        headers: { 'Content-Type': 'application/json' }
+      });
     }
 
     const token = authHeader.replace('Bearer ', '');
     const { data: { user }, error: authError } = await supabase.auth.getUser(token);
 
     if (authError || !user) {
-      return res.status(401).json({ error: 'Invalid or expired token' });
+      return new Response(JSON.stringify({ error: 'Invalid or expired token' }), {
+        status: 401,
+        headers: { 'Content-Type': 'application/json' }
+      });
     }
 
-    const days = parseInt(req.query.days) || 7;
+    const url = new URL(req.url);
+    const days = parseInt(url.searchParams.get('days')) || 7;
     const dateThreshold = new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString();
 
     const { data, error } = await supabase
@@ -41,16 +51,22 @@ export default async function handler(req, res) {
       throw new Error('Failed to fetch trend data');
     }
     
-    res.status(200).json({
+    return new Response(JSON.stringify({
       success: true,
       data: data || []
+    }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
     });
 
   } catch (error) {
     console.error('Fetch trends failed:', error);
-    res.status(500).json({ 
+    return new Response(JSON.stringify({ 
       error: 'Fetch failed',
       message: error.message 
+    }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' }
     });
   }
 }

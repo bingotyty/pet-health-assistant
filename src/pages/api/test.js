@@ -1,6 +1,6 @@
 export const runtime = 'edge';
 
-export default function handler(req, res) {
+export default function handler(req) {
   console.log('API test called:', req.method, req.url);
   
   const response = {
@@ -11,5 +11,8 @@ export default function handler(req, res) {
   };
   
   // 允许所有方法用于测试
-  res.status(200).json(response);
+  return new Response(JSON.stringify(response), {
+    status: 200,
+    headers: { 'Content-Type': 'application/json' }
+  });
 }
