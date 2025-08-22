@@ -1,6 +1,6 @@
 # 🐾 宠物粪便识别 MVP
 
-基于 Next.js + Supabase + AI 的宠物健康识别应用
+基于 Next.js + Supabase + AI 的宠物健康识别应用，支持多语言国际化
 
 ## 功能特性
 
