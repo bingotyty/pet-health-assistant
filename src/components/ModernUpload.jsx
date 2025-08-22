@@ -41,12 +41,12 @@ export default function ModernUpload({ onAnalysisComplete, onLoading }) {
     if (!file) return;
 
     if (!file.type.startsWith('image/')) {
-      alert('请选择图片文件');
+      alert(t('modern.upload.invalid_file'));
       return;
     }
 
     if (file.size > 10 * 1024 * 1024) {
-      alert('文件过大，请选择小于10MB的图片');
+      alert(t('modern.upload.file_too_large'));
       return;
     }
 
@@ -195,10 +195,10 @@ export default function ModernUpload({ onAnalysisComplete, onLoading }) {
             {/* 标题和描述 */}
             <div className="space-y-4">
               <h3 className="text-2xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
-                上传宠物粪便照片
+                {t('modern.upload.drag_drop')}
               </h3>
               <p className="text-gray-600 max-w-md mx-auto leading-relaxed">
-                拖拽图片到此处，或点击下方按钮选择图片文件
+                {t('modern.upload.or_click')}
               </p>
             </div>
 
@@ -210,7 +210,7 @@ export default function ModernUpload({ onAnalysisComplete, onLoading }) {
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-shimmer"></div>
                 <Camera className="w-5 h-5 mr-2 group-hover:rotate-12 transition-transform duration-300" />
-                📸 拍照上传
+                📸 {t('modern.upload.take_photo')}
               </Button>
 
               <div className="flex items-center">
@@ -224,7 +224,7 @@ export default function ModernUpload({ onAnalysisComplete, onLoading }) {
                 className="group px-8 py-4 border-2 border-pink-200 text-pink-600 hover:bg-gradient-to-r hover:from-pink-50 hover:to-rose-50 hover:border-pink-300 font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105"
               >
                 <Image className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-300" />
-                🖼️ 相册选择
+                🖼️ {t('modern.upload.select_gallery')}
               </Button>
             </div>
 
@@ -233,8 +233,8 @@ export default function ModernUpload({ onAnalysisComplete, onLoading }) {
               <div className="absolute inset-0 bg-gradient-to-br from-pink-500/20 via-rose-400/20 to-purple-500/20 flex items-center justify-center rounded-2xl backdrop-blur-sm border-2 border-dashed border-pink-400">
                 <div className="text-center bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-2xl">
                   <Upload className="w-12 h-12 text-pink-500 mx-auto mb-3 animate-bounce" />
-                  <p className="text-pink-600 font-bold text-lg">释放文件开始分析</p>
-                  <p className="text-pink-500 text-sm mt-1">AI将立即为您提供专业报告</p>
+                  <p className="text-pink-600 font-bold text-lg">Release files to start analysis</p>
+                  <p className="text-pink-500 text-sm mt-1">AI will provide you with professional reports immediately</p>
                 </div>
               </div>
             )}

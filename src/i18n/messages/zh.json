@@ -87,6 +87,45 @@
     "click_signup": "点击注册",
     "click_login": "点击登录"
   },
+  "modern": {
+    "app_title": "PetHealth AI",
+    "app_subtitle": "智能分析助手",
+    "app_version": "v2.0",
+    "hero": {
+      "title_part1": "AI 守护",
+      "title_part2": "宠物健康",
+      "description": "专业AI技术 • 秒级分析 • 科学建议",
+      "tagline": "让每一次关爱都更加精准"
+    },
+    "stats": {
+      "users_served": "已服务",
+      "pet_families": "宠物家庭",
+      "accuracy": "分析准确率",
+      "response_time": "平均响应时间",
+      "seconds": "秒"
+    },
+    "upload": {
+      "drag_drop": "拖拽图片到此处",
+      "or_click": "或点击下方按钮选择图片文件",
+      "take_photo": "立即拍照",
+      "select_gallery": "选择相册",
+      "file_too_large": "文件过大，请选择小于10MB的图片",
+      "invalid_file": "请选择图片文件",
+      "analyzing": "AI 分析师正在工作中...",
+      "analyzing_desc": "正在使用最先进的多模态AI技术深度分析您上传的图片"
+    },
+    "features": {
+      "ai_analysis": "AI智能分析",
+      "instant": "实时分析",
+      "professional": "专业建议",
+      "secure": "安全私密",
+      "available_247": "24/7可用"
+    },
+    "navigation": {
+      "ai_recognition": "AI识别",
+      "history": "历史记录"
+    }
+  },
   "common": {
     "loading": "加载中...",
     "retry": "重试",

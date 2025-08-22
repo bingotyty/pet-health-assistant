@@ -96,6 +96,45 @@
     "confirm": "確認",
     "close": "閉じる"
   },
+  "modern": {
+    "app_title": "PetHealth AI",
+    "app_subtitle": "スマート分析アシスタント",
+    "app_version": "v2.0",
+    "hero": {
+      "title_part1": "AI が守る",
+      "title_part2": "ペットの健康",
+      "description": "プロフェッショナルAI技術 • 瞬時分析 • 科学的アドバイス",
+      "tagline": "すべてのケアをより正確に"
+    },
+    "stats": {
+      "users_served": "サービス提供",
+      "pet_families": "ペット家族",
+      "accuracy": "分析精度",
+      "response_time": "平均応答時間",
+      "seconds": "秒"
+    },
+    "upload": {
+      "drag_drop": "画像をここにドラッグ&ドロップ",
+      "or_click": "または下のボタンをクリックして画像ファイルを選択",
+      "take_photo": "今すぐ撮影",
+      "select_gallery": "ギャラリーから選択",
+      "file_too_large": "ファイルサイズが大きすぎます。10MB以下の画像を選択してください",
+      "invalid_file": "画像ファイルを選択してください",
+      "analyzing": "AIアナリストが作業中...",
+      "analyzing_desc": "最先端のマルチモーダルAI技術を使用してアップロードされた画像を深く分析しています"
+    },
+    "features": {
+      "ai_analysis": "AIスマート分析",
+      "instant": "リアルタイム分析",
+      "professional": "専門的アドバイス",
+      "secure": "セキュアでプライベート",
+      "available_247": "24時間利用可能"
+    },
+    "navigation": {
+      "ai_recognition": "AI認識",
+      "history": "履歴"
+    }
+  },
   "errors": {
     "analysis_failed": "分析に失敗しました、再試行してください",
     "upload_failed": "アップロードに失敗しました",

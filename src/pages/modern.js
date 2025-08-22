@@ -75,14 +75,14 @@ export default function ModernHome() {
                 </div>
                 <div>
                   <h1 className="text-2xl font-bold bg-gradient-to-r from-pink-600 via-rose-500 to-purple-600 bg-clip-text text-transparent">
-                    PetHealth AI
+                    {t('modern.app_title')}
                   </h1>
                   <div className="flex items-center space-x-2">
                     <Badge className="text-xs bg-gradient-to-r from-pink-500 to-rose-500 text-white border-0">
-                      ✨ 智能分析助手
+                      ✨ {t('modern.app_subtitle')}
                     </Badge>
                     <Badge variant="outline" className="text-xs border-pink-300 text-pink-600">
-                      v2.0
+                      {t('modern.app_version')}
                     </Badge>
                   </div>
                 </div>
@@ -114,11 +114,11 @@ export default function ModernHome() {
             <div className="relative inline-block mb-8">
               <h1 className="text-5xl sm:text-7xl font-bold leading-tight">
                 <span className="bg-gradient-to-r from-pink-600 via-rose-500 to-purple-600 bg-clip-text text-transparent">
-                  AI 守护
+                  {t('modern.hero.title_part1')}
                 </span>
                 <br />
                 <span className="bg-gradient-to-r from-purple-600 via-pink-500 to-rose-500 bg-clip-text text-transparent">
-                  宠物健康
+                  {t('modern.hero.title_part2')}
                 </span>
               </h1>
               <div className="absolute -top-4 -right-4 animate-bounce">
@@ -129,24 +129,24 @@ export default function ModernHome() {
             </div>
             
             <p className="text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed mb-8">
-              专业AI技术 • 秒级分析 • 科学建议
+              {t('modern.hero.description')}
               <br />
-              <span className="text-pink-600 font-semibold">让每一次关爱都更加精准</span>
+              <span className="text-pink-600 font-semibold">{t('modern.hero.tagline')}</span>
             </p>
 
             {/* 统计信息 */}
             <div className="flex flex-wrap justify-center gap-6 text-sm">
               <div className="flex items-center space-x-2 bg-white/70 backdrop-blur-sm px-4 py-2 rounded-full shadow-md">
                 <Users className="w-4 h-4 text-blue-500" />
-                <span className="text-gray-700">已服务 <strong className="text-blue-600">50,000+</strong> 宠物家庭</span>
+                <span className="text-gray-700">{t('modern.stats.users_served')} <strong className="text-blue-600">50,000+</strong> {t('modern.stats.pet_families')}</span>
               </div>
               <div className="flex items-center space-x-2 bg-white/70 backdrop-blur-sm px-4 py-2 rounded-full shadow-md">
                 <TrendingUp className="w-4 h-4 text-green-500" />
-                <span className="text-gray-700">分析准确率 <strong className="text-green-600">95%</strong></span>
+                <span className="text-gray-700">{t('modern.stats.accuracy')} <strong className="text-green-600">95%</strong></span>
               </div>
               <div className="flex items-center space-x-2 bg-white/70 backdrop-blur-sm px-4 py-2 rounded-full shadow-md">
                 <Zap className="w-4 h-4 text-yellow-500" />
-                <span className="text-gray-700">平均响应时间 <strong className="text-yellow-600">3秒</strong></span>
+                <span className="text-gray-700">{t('modern.stats.response_time')} <strong className="text-yellow-600">3{t('modern.stats.seconds')}</strong></span>
               </div>
             </div>
           </div>
@@ -176,12 +176,10 @@ export default function ModernHome() {
                   </div>
                   
                   <h3 className="text-2xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent mb-4">
-                    AI 分析师正在工作中...
+                    {t('modern.upload.analyzing')}
                   </h3>
                   <p className="text-gray-600 leading-relaxed mb-6">
-                    正在使用最先进的多模态AI技术
-                    <br />
-                    深度分析您上传的图片
+                    {t('modern.upload.analyzing_desc')}
                   </p>
                   
                   <div className="flex justify-center space-x-2">
@@ -211,7 +209,7 @@ export default function ModernHome() {
                   <div className="text-2xl">📸</div>
                   <div className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-br from-pink-400 to-rose-500 rounded-full animate-pulse"></div>
                 </div>
-                <span className="text-sm font-bold text-pink-600">AI识别</span>
+                <span className="text-sm font-bold text-pink-600">{t('modern.navigation.ai_recognition')}</span>
                 <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-6 h-1 bg-gradient-to-r from-pink-500 to-purple-500 rounded-full"></div>
               </div>
               
@@ -222,7 +220,7 @@ export default function ModernHome() {
                 <div className="p-3 rounded-2xl group-hover:bg-gray-100 transition-all duration-300 shadow-md mb-2">
                   <div className="text-2xl opacity-60 group-hover:opacity-100 transition-opacity duration-200">📋</div>
                 </div>
-                <span className="text-sm font-medium text-gray-500 group-hover:text-gray-700">历史记录</span>
+                <span className="text-sm font-medium text-gray-500 group-hover:text-gray-700">{t('modern.navigation.history')}</span>
               </button>
             </div>
           </div>

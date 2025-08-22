@@ -87,6 +87,45 @@
     "click_signup": "Click to sign up",
     "click_login": "Click to login"
   },
+  "modern": {
+    "app_title": "PetHealth AI",
+    "app_subtitle": "Smart Analysis Assistant",
+    "app_version": "v2.0",
+    "hero": {
+      "title_part1": "AI Guardian",
+      "title_part2": "Pet Health",
+      "description": "Professional AI Technology • Instant Analysis • Scientific Advice",
+      "tagline": "Making every care more precise"
+    },
+    "stats": {
+      "users_served": "Served",
+      "pet_families": "Pet Families",
+      "accuracy": "Analysis Accuracy",
+      "response_time": "Average Response Time",
+      "seconds": "seconds"
+    },
+    "upload": {
+      "drag_drop": "Drag & drop images here",
+      "or_click": "Or click the buttons below to select image files",
+      "take_photo": "Take Photo Now",
+      "select_gallery": "Select from Gallery",
+      "file_too_large": "File too large, please select images smaller than 10MB",
+      "invalid_file": "Please select image files",
+      "analyzing": "AI Analyst is working...",
+      "analyzing_desc": "Using the most advanced multimodal AI technology to deeply analyze your uploaded images"
+    },
+    "features": {
+      "ai_analysis": "AI Smart Analysis",
+      "instant": "Real-time Analysis",
+      "professional": "Professional Advice",
+      "secure": "Secure & Private",
+      "available_247": "24/7 Available"
+    },
+    "navigation": {
+      "ai_recognition": "AI Recognition",
+      "history": "History"
+    }
+  },
   "common": {
     "loading": "Loading...",
     "retry": "Retry",
