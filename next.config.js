@@ -22,4 +22,4 @@ const nextConfig = {
   outputFileTracingRoot: undefined,
 }
 
-export default nextConfig
+export default nextConfig;

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTranslations } from '../lib/i18n';
 import { compressImage } from '../lib/utils';
 import { useAuth } from '../contexts/AuthContext';
 import { analyzePoopClient } from '../lib/client-api';
@@ -13,6 +14,7 @@ export default function UploadComponent({ onAnalysisComplete, onLoading }) {
     isMobile: false
   });
   const { user } = useAuth();
+  const t = useTranslations();
 
   useEffect(() => {
     // 检测设备能力
@@ -45,12 +47,12 @@ export default function UploadComponent({ onAnalysisComplete, onLoading }) {
     if (!file) return;
 
     if (!file.type.startsWith('image/')) {
-      alert('请选择图片文件');
+      alert(t('errors.invalid_file'));
       return;
     }
 
     if (file.size > 10 * 1024 * 1024) {
-      alert('图片大小不能超过10MB');
+      alert(t('errors.file_too_large'));
       return;
     }
 
@@ -61,7 +63,7 @@ export default function UploadComponent({ onAnalysisComplete, onLoading }) {
       
       // 检查用户登录状态
       if (!user || !user.id) {
-        throw new Error('用户未登录');
+        throw new Error(t('errors.login_required'));
       }
       
       // 根据环境选择不同的API调用方式
@@ -75,7 +77,7 @@ export default function UploadComponent({ onAnalysisComplete, onLoading }) {
         // 开发环境使用API路由
         const { data: { session } } = await supabase.auth.getSession();
         if (!session) {
-          throw new Error('用户未登录');
+          throw new Error(t('errors.login_required'));
         }
         
         const formData = new FormData();
@@ -91,7 +93,7 @@ export default function UploadComponent({ onAnalysisComplete, onLoading }) {
 
         if (!response.ok) {
           const errorData = await response.json();
-          throw new Error(errorData.message || '分析失败');
+          throw new Error(errorData.message || t('errors.analysis_failed'));
         }
 
         const result = await response.json();
@@ -100,7 +102,7 @@ export default function UploadComponent({ onAnalysisComplete, onLoading }) {
       
     } catch (error) {
       console.error('Analysis failed:', error);
-      alert(error.message || '分析失败，请重试');
+      alert(error.message || t('errors.analysis_failed'));
     } finally {
       onLoading(false);
     }
@@ -183,13 +185,13 @@ export default function UploadComponent({ onAnalysisComplete, onLoading }) {
           {/* 标题文字 */}
           <h3 className="text-2xl font-black text-rose-600 mb-3 relative">
             <span className="bg-gradient-to-r from-rose-500 via-pink-500 to-rose-600 bg-clip-text text-transparent">
-              📸 智能识别毛孩便便
+              📸 {t('home.upload.title')}
             </span>
           </h3>
           
           <p className="text-pink-500 mb-8 font-semibold text-lg">
             <span className="inline-block animate-pulse">💕</span>
-            轻松拖拽或点击上传照片
+            {t('home.upload.description')}
             <span className="inline-block animate-pulse">💕</span>
           </p>
 
@@ -222,7 +224,7 @@ export default function UploadComponent({ onAnalysisComplete, onLoading }) {
               <div className="relative bg-gradient-to-r from-pink-400 via-rose-400 to-pink-500 text-white font-bold py-4 px-6 rounded-2xl shadow-lg transform transition-all duration-300 group-hover:scale-105 group-hover:shadow-xl border border-pink-300 min-w-[160px]">
                 <div className="flex flex-col items-center space-y-2">
                   <span className="text-3xl animate-bounce">📸</span>
-                  <span className="text-sm font-black">立即拍照</span>
+                  <span className="text-sm font-black">{t('home.upload.camera_button')}</span>
                   {deviceCapabilities.isPWA && (
                     <span className="text-xs bg-white/20 px-2 py-1 rounded-full">PWA模式</span>
                   )}

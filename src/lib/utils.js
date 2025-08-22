@@ -1,3 +1,11 @@
+import { clsx } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+// shadcn/ui cn 工具函数
+export function cn(...inputs) {
+  return twMerge(clsx(inputs))
+}
+
 export const compressImage = (file, quality = 0.7) => {
   return new Promise((resolve) => {
     const canvas = document.createElement('canvas');

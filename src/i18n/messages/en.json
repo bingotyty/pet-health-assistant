@@ -1,0 +1,107 @@
+{
+  "nav": {
+    "detection": "Detection",
+    "history": "History"
+  },
+  "home": {
+    "title": "Pet Health",
+    "subtitle": "AI Smart Poop Recognition",
+    "description": "Let AI guard your pet's health • Scientifically analyze every care",
+    "upload": {
+      "title": "Smart Pet Poop Recognition",
+      "description": "Drag & drop or click to upload photos",
+      "camera_button": "Take Photo Now",
+      "gallery_button": "Select from Album",
+      "tips": {
+        "title": "AI Tips",
+        "format": "Supported Formats",
+        "format_desc": "JPG・PNG・WebP",
+        "photo": "Photo Tips",
+        "photo_desc": "Clear・Good lighting・Front view",
+        "speed": "Analysis Speed",
+        "speed_desc": "Usually 3-5 seconds",
+        "size_limit": "File size limit: Max 10MB"
+      },
+      "pet_types": {
+        "cat": "Kitty",
+        "dog": "Puppy"
+      },
+      "ios_tips": {
+        "title": "iOS Camera Tips",
+        "description": "Tap \"Take Photo Now\" to launch camera",
+        "pwa_note": "Camera feature works perfectly in PWA mode!"
+      }
+    },
+    "result": {
+      "analyzing": "AI is analyzing...",
+      "please_wait": "Please wait, AI is carefully observing",
+      "analysis_complete": "Analysis complete!"
+    }
+  },
+  "history": {
+    "title": "Health Record Book",
+    "subtitle": "Pet's Health Growth Diary",
+    "description": "Record every care • Witness healthy growth",
+    "trend": {
+      "title": "7-Day Health Trend"
+    },
+    "empty": {
+      "title": "No records yet~",
+      "description": "Start creating the first health profile for your pet!",
+      "sub_description": "Let AI guard them every day",
+      "start_button": "Start Detection Now"
+    },
+    "record_count": "Total {count} health records"
+  },
+  "result_card": {
+    "health_status": "Health Status",
+    "analysis_result": "Analysis Result",
+    "health_advice": "Health Advice",
+    "risk_levels": {
+      "low": "Normal",
+      "medium": "Mild Concern",
+      "high": "Needs Attention"
+    },
+    "analysis": {
+      "color": "Color",
+      "texture": "Texture",
+      "blood": "Blood",
+      "worms": "Parasites",
+      "mucus": "Mucus",
+      "yes": "Yes",
+      "no": "No",
+      "suspected": "Suspected",
+      "not_found": "Not found"
+    }
+  },
+  "auth": {
+    "title": "Pet Health Assistant",
+    "subtitle": "Please login to continue",
+    "email_placeholder": "Enter email address",
+    "password_placeholder": "Enter password",
+    "login": "Login",
+    "signup": "Sign Up",
+    "forgot_password": "Forgot password?",
+    "no_account": "Don't have an account?",
+    "have_account": "Already have an account?",
+    "click_signup": "Click to sign up",
+    "click_login": "Click to login"
+  },
+  "common": {
+    "loading": "Loading...",
+    "retry": "Retry",
+    "error": "Error occurred",
+    "success": "Success",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "close": "Close"
+  },
+  "errors": {
+    "analysis_failed": "Analysis failed, please try again",
+    "upload_failed": "Upload failed",
+    "network_error": "Network error, please check connection",
+    "file_too_large": "Image size cannot exceed 10MB",
+    "invalid_file": "Please select an image file",
+    "login_required": "User not logged in"
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "nav": {
+    "detection": "識別",
+    "history": "履歴"
+  },
+  "home": {
+    "title": "ペット健康",
+    "subtitle": "AI スマートうんち識別",
+    "description": "AIがペットの健康を守る • 科学的に分析し、愛情をこめて",
+    "upload": {
+      "title": "スマートペットうんち識別",
+      "description": "ドラッグ＆ドロップまたはクリックして写真をアップロード",
+      "camera_button": "今すぐ撮影",
+      "gallery_button": "アルバム選択",
+      "tips": {
+        "title": "AIヒント",
+        "format": "対応フォーマット",
+        "format_desc": "JPG・PNG・WebP",
+        "photo": "撮影のコツ",
+        "photo_desc": "鮮明・十分な光・正面撮影",
+        "speed": "分析速度",
+        "speed_desc": "通常3-5秒",
+        "size_limit": "ファイルサイズ制限：最大10MB"
+      },
+      "pet_types": {
+        "cat": "ネコちゃん",
+        "dog": "ワンちゃん"
+      },
+      "ios_tips": {
+        "title": "iOS 撮影のヒント",
+        "description": "「今すぐ撮影」をタップするとカメラが起動します",
+        "pwa_note": "PWAモードでの撮影機能は完璧にサポートされています！"
+      }
+    },
+    "result": {
+      "analyzing": "AIが分析中...",
+      "please_wait": "しばらくお待ちください、AIが注意深く観察しています",
+      "analysis_complete": "分析完了！"
+    }
+  },
+  "history": {
+    "title": "健康記録帳",
+    "subtitle": "ペットの健康成長日記",
+    "description": "一回一回の愛情を記録 • 健康な成長を見守る",
+    "trend": {
+      "title": "7日間健康トレンド"
+    },
+    "empty": {
+      "title": "まだ記録がありません〜",
+      "description": "ペットの最初の健康ファイルを作成しましょう！",
+      "sub_description": "AIがあなたのペットを毎日守ります",
+      "start_button": "今すぐ検査開始"
+    },
+    "record_count": "合計 {count} 件の健康記録"
+  },
+  "result_card": {
+    "health_status": "健康状態",
+    "analysis_result": "分析結果",
+    "health_advice": "健康アドバイス",
+    "risk_levels": {
+      "low": "正常",
+      "medium": "軽度注意",
+      "high": "要注意"
+    },
+    "analysis": {
+      "color": "色",
+      "texture": "質感",
+      "blood": "血筋",
+      "worms": "寄生虫",
+      "mucus": "粘液",
+      "yes": "あり",
+      "no": "なし",
+      "suspected": "疑いあり",
+      "not_found": "発見されず"
+    }
+  },
+  "auth": {
+    "title": "ペット健康アシスタント",
+    "subtitle": "続行するにはログインしてください",
+    "email_placeholder": "メールアドレスを入力",
+    "password_placeholder": "パスワードを入力",
+    "login": "ログイン",
+    "signup": "登録",
+    "forgot_password": "パスワードを忘れましたか？",
+    "no_account": "アカウントをお持ちでないですか？",
+    "have_account": "既にアカウントをお持ちですか？",
+    "click_signup": "登録はこちら",
+    "click_login": "ログインはこちら"
+  },
+  "common": {
+    "loading": "読み込み中...",
+    "retry": "再試行",
+    "error": "エラーが発生しました",
+    "success": "成功",
+    "cancel": "キャンセル",
+    "confirm": "確認",
+    "close": "閉じる"
+  },
+  "errors": {
+    "analysis_failed": "分析に失敗しました、再試行してください",
+    "upload_failed": "アップロードに失敗しました",
+    "network_error": "ネットワークエラー、接続を確認してください",
+    "file_too_large": "画像サイズは10MBを超えることはできません",
+    "invalid_file": "画像ファイルを選択してください",
+    "login_required": "ユーザーがログインしていません"
+  }
+}

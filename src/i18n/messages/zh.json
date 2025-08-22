@@ -1,0 +1,107 @@
+{
+  "nav": {
+    "detection": "识别",
+    "history": "历史"
+  },
+  "home": {
+    "title": "宠物健康",
+    "subtitle": "AI智能便便识别",
+    "description": "让AI守护毛孩子的健康 • 科学分析每一次关爱",
+    "upload": {
+      "title": "智能识别毛孩便便",
+      "description": "轻松拖拽或点击上传照片",
+      "camera_button": "立即拍照",
+      "gallery_button": "选择相册",
+      "tips": {
+        "title": "AI小贴士",
+        "format": "支持格式",
+        "format_desc": "JPG・PNG・WebP",
+        "photo": "拍照建议",
+        "photo_desc": "清晰・光线充足・正面拍摄",
+        "speed": "分析速度",
+        "speed_desc": "通常3-5秒",
+        "size_limit": "文件大小限制：最大10MB"
+      },
+      "pet_types": {
+        "cat": "猫咪宝贝",
+        "dog": "狗狗宝宝"
+      },
+      "ios_tips": {
+        "title": "iOS 拍照提示",
+        "description": "点击\"立即拍照\"会直接调起相机",
+        "pwa_note": "PWA模式下拍照功能完美支持！"
+      }
+    },
+    "result": {
+      "analyzing": "AI正在分析中...",
+      "please_wait": "请稍等片刻，AI正在仔细观察",
+      "analysis_complete": "分析完成！"
+    }
+  },
+  "history": {
+    "title": "健康记录本",
+    "subtitle": "毛孩子的健康成长日记",
+    "description": "记录每一次关爱 • 见证健康成长",
+    "trend": {
+      "title": "7天健康趋势"
+    },
+    "empty": {
+      "title": "还没有记录哦~",
+      "description": "开始为毛孩子创建第一个健康档案吧！",
+      "sub_description": "让AI守护TA的每一天",
+      "start_button": "立即开始检测"
+    },
+    "record_count": "共 {count} 条健康记录"
+  },
+  "result_card": {
+    "health_status": "健康状态",
+    "analysis_result": "分析结果",
+    "health_advice": "健康建议",
+    "risk_levels": {
+      "low": "正常",
+      "medium": "轻度关注",
+      "high": "需要关注"
+    },
+    "analysis": {
+      "color": "颜色",
+      "texture": "质地",
+      "blood": "血丝",
+      "worms": "寄生虫",
+      "mucus": "黏液",
+      "yes": "有",
+      "no": "无",
+      "suspected": "疑似有",
+      "not_found": "未发现"
+    }
+  },
+  "auth": {
+    "title": "宠物健康助手",
+    "subtitle": "请先登录继续使用",
+    "email_placeholder": "输入邮箱地址",
+    "password_placeholder": "输入密码",
+    "login": "登录",
+    "signup": "注册",
+    "forgot_password": "忘记密码？",
+    "no_account": "还没有账户？",
+    "have_account": "已有账户？",
+    "click_signup": "点击注册",
+    "click_login": "点击登录"
+  },
+  "common": {
+    "loading": "加载中...",
+    "retry": "重试",
+    "error": "出错了",
+    "success": "成功",
+    "cancel": "取消",
+    "confirm": "确认",
+    "close": "关闭"
+  },
+  "errors": {
+    "analysis_failed": "分析失败，请重试",
+    "upload_failed": "上传失败",
+    "network_error": "网络错误，请检查连接",
+    "file_too_large": "图片大小不能超过10MB",
+    "invalid_file": "请选择图片文件",
+    "login_required": "用户未登录"
+  }
+}
