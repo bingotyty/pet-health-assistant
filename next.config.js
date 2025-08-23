@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  // 修复路由重定向问题 - 统一使用尾部斜杠
+  // 修复路由重定向问题 - 统一使用尾部斜杠 - 2025-08-23
   trailingSlash: true,
   images: {
     domains: ['localhost'],
