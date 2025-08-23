@@ -7,9 +7,9 @@
     "dev": "next dev",
     "build": "next build",
     "build:cloudflare": "next build && npx @cloudflare/next-on-pages",
-    "pages:build": "npx @cloudflare/next-on-pages",
-    "preview": "npm run pages:build && wrangler pages dev",
-    "deploy": "npm run pages:build && wrangler pages deploy",
+    "build:cf": "npx @cloudflare/next-on-pages",
+    "preview": "npm run build:cloudflare && wrangler pages dev",
+    "deploy": "npm run build:cloudflare && wrangler pages deploy",
     "start": "next start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
