@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // 修复路由重定向问题 - 统一使用尾部斜杠
+  trailingSlash: true,
   images: {
     domains: ['localhost'],
     // 根据环境动态设置
