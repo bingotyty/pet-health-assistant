@@ -1,12 +1,10 @@
-export const runtime = 'edge';
+// 改为 Node.js runtime 以支持 Supabase
+// export const runtime = 'edge';
 export const dynamic = 'force-dynamic';
 
-export default function handler(req) {
+export default function handler(req, res) {
   if (req.method !== 'GET') {
-    return new Response(JSON.stringify({ error: 'Method not allowed' }), {
-      status: 405,
-      headers: { 'Content-Type': 'application/json' }
-    });
+    return res.status(405).json({ error: 'Method not allowed' });
   }
 
   const requiredVars = {
@@ -24,7 +22,7 @@ export default function handler(req) {
 
   const isHealthy = missingVars.length === 0;
 
-  return new Response(JSON.stringify({
+  return res.status(isHealthy ? 200 : 503).json({
     status: isHealthy ? 'healthy' : 'unhealthy',
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV,
@@ -35,8 +33,5 @@ export default function handler(req) {
     message: isHealthy 
       ? '所有配置正常' 
       : `缺少以下环境变量: ${missingVars.join(', ')}`
-  }), {
-    status: isHealthy ? 200 : 503,
-    headers: { 'Content-Type': 'application/json' }
   });
 }

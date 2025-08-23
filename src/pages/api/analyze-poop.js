@@ -1,7 +1,8 @@
 import { createClient } from '@supabase/supabase-js';
 import { analyzePoopWithQwen, generateHealthReport, determineRiskLevel } from '../../lib/ai-service';
 
-export const runtime = 'edge';
+// 改为 Node.js runtime 以支持 Supabase
+// export const runtime = 'edge';
 
 // 显式声明支持的HTTP方法
 export const dynamic = 'force-dynamic';

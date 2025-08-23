@@ -1,4 +1,5 @@
-export const runtime = 'edge';
+// 改为 Node.js runtime 以支持 Supabase
+// export const runtime = 'edge';
 export const dynamic = 'force-dynamic';
 
 export default function handler(req) {
