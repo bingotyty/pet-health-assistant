@@ -42,4 +42,5 @@ coverage/
 .vercel
 
 # Sharp (macOS binary)
-node_modules/@img/sharp-darwin-arm64/
+node_modules/@img/sharp-darwin-arm64/.wrangler/
+.vercel/
