@@ -1,14 +1,16 @@
 # Cloudflare Pages配置
 name = "pet-health-assistant"
 compatibility_date = "2024-09-23"
-pages_build_output_dir = ".vercel/output/static"
+
+# 使用Next.js原生构建而非@cloudflare/next-on-pages
+# Cloudflare Pages原生支持Next.js，无需适配器
 
 # 启用 Node.js 兼容性 (Edge Functions需要)
 compatibility_flags = ["nodejs_compat"]
 
-# 注意：Cloudflare Pages的构建配置需要在Dashboard中设置
-# 构建命令：npm run build:cloudflare
-# 输出目录：.vercel/output/static
+# Cloudflare Pages Dashboard构建设置:
+# 构建命令: next build
+# 构建输出目录: .next
 
 [env.production]
 # 生产环境变量在Cloudflare Dashboard设置

@@ -8,6 +8,7 @@
     "build": "next build",
     "build:cloudflare": "next build && npx @cloudflare/next-on-pages",
     "build:cf": "npx @cloudflare/next-on-pages",
+    "build:native": "next build",
     "preview": "npm run build:cloudflare && wrangler pages dev",
     "deploy": "npm run build:cloudflare && wrangler pages deploy",
     "start": "next start",
