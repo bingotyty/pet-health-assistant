@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useTranslations } from '../lib/i18n';
 import { compressImage } from '../lib/utils';
 import { useAuth } from '../contexts/AuthContext';
-import { analyzePoopClient } from '../lib/client-api';
 import { supabase } from '../lib/supabase';
 import { Button } from './ui/button-simple';
 import { Card, CardContent } from './ui/card-simple';
@@ -73,38 +72,31 @@ export default function UploadComponentSimple({ onAnalysisComplete, onLoading })
       
       setUploadProgress(95);
       
-      const isStatic = process.env.DEPLOY_TARGET === 'cloudflare' || process.env.NODE_ENV === 'production';
-      
-      if (isStatic) {
-        const result = await analyzePoopClient(compressedFile, user.id);
-        setUploadProgress(100);
-        onAnalysisComplete(result);
-      } else {
-        const { data: { session } } = await supabase.auth.getSession();
-        if (!session) {
-          throw new Error(t('errors.login_required'));
-        }
-        
-        const formData = new FormData();
-        formData.append('image', compressedFile);
-        
-        const response = await fetch('/api/analyze-poop', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${session.access_token}`
-          },
-          body: formData
-        });
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || t('errors.analysis_failed'));
-        }
-
-        const result = await response.json();
-        setUploadProgress(100);
-        onAnalysisComplete(result.data);
+      // 使用安全的API路由调用（所有环境）
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        throw new Error(t('errors.login_required'));
       }
+      
+      const formData = new FormData();
+      formData.append('image', compressedFile);
+      
+      const response = await fetch('/api/analyze-poop', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${session.access_token}`
+        },
+        body: formData
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || t('errors.analysis_failed'));
+      }
+
+      const result = await response.json();
+      setUploadProgress(100);
+      onAnalysisComplete(result.data);
       
     } catch (error) {
       console.error('Analysis failed:', error);

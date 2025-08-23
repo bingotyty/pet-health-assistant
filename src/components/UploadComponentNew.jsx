@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useTranslations } from '../lib/i18n';
 import { compressImage } from '../lib/utils';
 import { useAuth } from '../contexts/AuthContext';
-import { analyzePoopClient } from '../lib/client-api';
 import { supabase } from '../lib/supabase';
 import { Button } from './ui/button';
 import { Card, CardContent } from './ui/card';

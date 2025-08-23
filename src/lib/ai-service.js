@@ -1,3 +1,8 @@
+// 🔒 安全检查：确保AI服务只在服务端运行
+if (typeof window !== 'undefined') {
+  throw new Error('🚨 SECURITY: AI服务必须在服务端运行！客户端运行会暴露API密钥！');
+}
+
 // OpenAI客户端懒加载初始化
 let openai = null;
 

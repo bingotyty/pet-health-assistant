@@ -3,7 +3,6 @@ import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../lib/supabase';
 import Auth from '../components/Auth';
 import { analyzeTrend } from '../lib/utils';
-import { getRecordsClient, getTrendsClient } from '../lib/client-api';
 import ResultCard from '../components/ResultCard';
 import UserProfile from '../components/UserProfile';
 import OfflineIndicator from '../components/OfflineIndicator';
@@ -28,28 +27,19 @@ export default function HistoryPage() {
     if (!user || !user.id) return;
     
     try {
-      // 根据环境选择API调用方式
-      const isStatic = process.env.DEPLOY_TARGET === 'cloudflare' || process.env.NODE_ENV === 'production';
+      // 使用安全的API路由调用（所有环境）
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return;
       
-      if (isStatic) {
-        // 生产环境使用客户端API
-        const records = await getRecordsClient(user.id);
-        setRecords(records);
-      } else {
-        // 开发环境使用API路由
-        const { data: { session } } = await supabase.auth.getSession();
-        if (!session) return;
-        
-        const response = await fetch('/api/records', {
-          headers: {
-            'Authorization': `Bearer ${session.access_token}`
-          }
-        });
-        
-        if (response.ok) {
-          const result = await response.json();
-          setRecords(result.data || []);
+      const response = await fetch('/api/records', {
+        headers: {
+          'Authorization': `Bearer ${session.access_token}`
         }
+      });
+      
+      if (response.ok) {
+        const result = await response.json();
+        setRecords(result.data || []);
       }
     } catch (error) {
       console.error('Error fetching records:', error);
@@ -63,30 +53,20 @@ export default function HistoryPage() {
     if (!user || !user.id) return;
     
     try {
-      // 根据环境选择API调用方式
-      const isStatic = process.env.DEPLOY_TARGET === 'cloudflare' || process.env.NODE_ENV === 'production';
+      // 使用安全的API路由调用（所有环境）
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return;
       
-      if (isStatic) {
-        // 生产环境使用客户端API
-        const trendRecords = await getTrendsClient(user.id, 7);
-        const trend = analyzeTrend(trendRecords);
-        setTrendData(trend);
-      } else {
-        // 开发环境使用API路由
-        const { data: { session } } = await supabase.auth.getSession();
-        if (!session) return;
-        
-        const response = await fetch('/api/trends', {
-          headers: {
-            'Authorization': `Bearer ${session.access_token}`
-          }
-        });
-        
-        if (response.ok) {
-          const result = await response.json();
-          const trend = analyzeTrend(result.data);
-          setTrendData(trend);
+      const response = await fetch('/api/trends', {
+        headers: {
+          'Authorization': `Bearer ${session.access_token}`
         }
+      });
+      
+      if (response.ok) {
+        const result = await response.json();
+        const trend = analyzeTrend(result.data);
+        setTrendData(trend);
       }
     } catch (error) {
       console.error('Error generating trend:', error);
