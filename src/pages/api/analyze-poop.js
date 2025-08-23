@@ -3,11 +3,25 @@ import { analyzePoopWithQwen, generateHealthReport, determineRiskLevel } from '.
 
 export const runtime = 'edge';
 
+// 显式声明支持的HTTP方法
+export const dynamic = 'force-dynamic';
+
 export default async function handler(req) {
-  if (req.method !== 'POST') {
-    return new Response(JSON.stringify({ error: 'Method not allowed' }), {
+  // 确保请求方法存在并且是POST
+  const method = req.method || 'GET';
+  console.log('API调用方法:', method, 'URL:', req.url);
+  
+  if (method !== 'POST') {
+    return new Response(JSON.stringify({ 
+      error: 'Method not allowed',
+      method: method,
+      allowedMethods: ['POST']
+    }), {
       status: 405,
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 
+        'Content-Type': 'application/json',
+        'Allow': 'POST'
+      }
     });
   }
 

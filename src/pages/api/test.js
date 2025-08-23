@@ -1,4 +1,5 @@
 export const runtime = 'edge';
+export const dynamic = 'force-dynamic';
 
 export default function handler(req) {
   console.log('API test called:', req.method, req.url);
