@@ -6,9 +6,9 @@ pages_build_output_dir = ".vercel/output/static"
 # 启用 Node.js 兼容性 (Edge Functions需要)
 compatibility_flags = ["nodejs_compat"]
 
-[build]
-# Cloudflare Pages构建命令应该是: npm run build:cloudflare
-command = "npm run build:cloudflare"
+# 注意：Cloudflare Pages的构建配置需要在Dashboard中设置
+# 构建命令：npm run build:cloudflare
+# 输出目录：.vercel/output/static
 
 [env.production]
 # 生产环境变量在Cloudflare Dashboard设置
