@@ -1,10 +1,13 @@
-// 改为 Node.js runtime 以支持 Supabase
-// export const runtime = 'edge';
+// Cloudflare Pages 要求 Edge Runtime
+export const runtime = 'edge';
 export const dynamic = 'force-dynamic';
 
-export default function handler(req, res) {
+export default function handler(req) {
   if (req.method !== 'GET') {
-    return res.status(405).json({ error: 'Method not allowed' });
+    return new Response(JSON.stringify({ error: 'Method not allowed' }), {
+      status: 405,
+      headers: { 'Content-Type': 'application/json' }
+    });
   }
 
   const requiredVars = {
@@ -22,7 +25,7 @@ export default function handler(req, res) {
 
   const isHealthy = missingVars.length === 0;
 
-  return res.status(isHealthy ? 200 : 503).json({
+  return new Response(JSON.stringify({
     status: isHealthy ? 'healthy' : 'unhealthy',
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV,
@@ -33,5 +36,8 @@ export default function handler(req, res) {
     message: isHealthy 
       ? '所有配置正常' 
       : `缺少以下环境变量: ${missingVars.join(', ')}`
+  }), {
+    status: isHealthy ? 200 : 503,
+    headers: { 'Content-Type': 'application/json' }
   });
 }

@@ -1,5 +1,5 @@
-// 改为 Node.js runtime 以支持 Supabase
-// export const runtime = 'edge';
+// Cloudflare Pages 要求 Edge Runtime
+export const runtime = 'edge';
 export const dynamic = 'force-dynamic';
 
 export default function handler(req) {
