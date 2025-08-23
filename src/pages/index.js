@@ -4,27 +4,9 @@ export default function Home() {
   const [redirectFailed, setRedirectFailed] = useState(false);
   
   useEffect(() => {
-    // 添加超时和错误处理的重定向
-    const timer = setTimeout(() => {
-      setRedirectFailed(true);
-    }, 3000); // 3秒后显示错误信息
-    
-    // 检查/modern页面是否可访问
-    fetch('/modern', { method: 'HEAD' })
-      .then(response => {
-        clearTimeout(timer);
-        if (response.ok) {
-          window.location.href = '/modern';
-        } else {
-          setRedirectFailed(true);
-        }
-      })
-      .catch(() => {
-        clearTimeout(timer);
-        setRedirectFailed(true);
-      });
-      
-    return () => clearTimeout(timer);
+    // 直接重定向到 /modern/ (带尾部斜杠)
+    // 因为 Cloudflare Pages 上 /modern/ 可以访问而 /modern 不行
+    window.location.href = '/modern/';
   }, []);
   
   if (redirectFailed) {
@@ -36,7 +18,7 @@ export default function Home() {
           <p className="text-gray-600 mb-6">用AI守护毛孩子的健康</p>
           <div className="space-y-3">
             <button 
-              onClick={() => window.location.href = '/modern'}
+              onClick={() => window.location.href = '/modern/'}
               className="w-full bg-gradient-to-r from-pink-500 to-rose-500 text-white py-3 px-6 rounded-lg hover:from-pink-600 hover:to-rose-600 transition-colors"
             >
               进入现代版
